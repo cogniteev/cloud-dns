@@ -20,4 +20,4 @@ You may follow the [Getting started tutorial](getting_started.md) to know more a
 
 # License
 
-Cloud DNS is licensed under the Apache License, Version 2.0. See[License](https://raw.githubusercontent.com/cogniteev/cloud-dns/master/LICENSE) for full license text.
+Cloud DNS is licensed under the Apache License, Version 2.0. See [License](https://raw.githubusercontent.com/cogniteev/cloud-dns/master/LICENSE) for full license text.
