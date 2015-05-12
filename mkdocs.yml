@@ -1,0 +1,9 @@
+site_name: Cloud DNS Documentation
+site_description: DNS utilities on top of Apache LibCloud
+site_favicon:
+site_url: cloud-dns.readthedocs.org
+repo_url: https://github.com/cogniteev/cloud-dns
+theme: readthedocs
+pages:
+- [index.md, Home]
+- [getting_started.md,Getting Started]
