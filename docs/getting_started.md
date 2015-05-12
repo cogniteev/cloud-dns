@@ -38,7 +38,7 @@ In this situation, a profile has already been pushed to a Google Storage bucket 
 1. Run the following command:
 
     ```
-    cloud-dns config pull my-company my-company-cloud-dns github://john.doe
+    cloud-dns config -v pull my-company my-company-cloud-dns github://john.doe
     ```
 
 That's it!
@@ -73,7 +73,7 @@ Note that your can specify an alternate file with the `--output` option.
 When you modify a profile (in `~/.config/cloud-dns/<PROFILE>`), you might want to publish it afterward so that your co-workers can take benefits of this change:
 
 ```shell
-cloud-dns config push <profile> <gstorage-bucket>
+cloud-dns config push -v <profile> <gstorage-bucket>
 ```
 
 Note: this does not support concurrent modifications for now: the last one pushing wins!
