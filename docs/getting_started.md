@@ -20,7 +20,7 @@ You may have:
 Install Cloud DNS Python module:
 
 ```shell
-pip install cloud-dns
+pip install cloud-dns==0.1a1
 ```
 
 ## Bootstrap
