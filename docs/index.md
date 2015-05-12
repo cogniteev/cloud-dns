@@ -14,6 +14,8 @@ Actually, for now, it only provides the capability to keep your `/etc/hosts` upd
 pip install cloud-dns==0.1a2
 ```
 
+As Cloud DNS has many dependencies, it is recommended to install it in a virtualenv.
+
 # Getting started
 
 You may follow the [Getting started tutorial](getting_started.md) to know more about it.

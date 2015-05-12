@@ -23,6 +23,8 @@ Install Cloud DNS Python module:
 pip install cloud-dns==0.1a2
 ```
 
+As Cloud DNS has many dependencies, it is recommended to install it in a virtualenv.
+
 ## Bootstrap
 
 ### Somebody already setup a profile for my crew
