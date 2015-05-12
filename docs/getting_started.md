@@ -20,7 +20,7 @@ You may have:
 Install Cloud DNS Python module:
 
 ```shell
-pip install cloud-dns==0.1a3
+pip install cloud-dns==0.1b
 ```
 
 As Cloud DNS has many dependencies, it is recommended to install it in a virtualenv.

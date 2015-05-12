@@ -110,7 +110,7 @@ def cloud_dns(args=None):
     )
     parser.add_argument(
         '-c', '--config-dir',
-        help='Specify config root path [default: %(defaults)]',
+        help='Specify config root path [default: %(default)s]',
         dest='config_path',
         default=DEFAULT_CONFIG_PATH
     )
