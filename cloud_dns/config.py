@@ -218,7 +218,7 @@ class GStorageKeybaseProfile(Profile):
                 shutil.move(self.path, backup_config)
             elif not osp.isdir(osp.dirname(self.path)):
                 logging.debug("Creating directories: " + osp.dirname(self.path))
-                os.mkdirs(osp.dirname(self.path))
+                os.makedirs(osp.dirname(self.path))
             logging.debug("Copying new profile to: " + self.path)
             shutil.copytree(
                 decrypted_config,
