@@ -63,7 +63,7 @@ cloud-dns etc-hosts list
 To patch your `/etc/hosts` file with IP addresses your nodes specified in your profiles:
 
 ```
-cloud-dns etc-hosts update
+sudo cloud-dns etc-hosts update
 ```
 
 Note that your can specify an alternate file with the `--output` option.
