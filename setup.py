@@ -48,6 +48,6 @@ setup(
     ],
     entry_points = """
         [console_scripts]
-        cloud-dns-update-etc-hosts = cloud_dns.api:run
+        cloud-dns = cloud_dns.entry_points:cloud_dns
     """
 )
