@@ -5,7 +5,7 @@ import yaml
 
 from libcloud.compute import providers
 
-DEFAULT_YAML_CONFIG = osp.expanduser('~/.config/cloud-dns/projects.yml')
+
 
 def load_file(input_file):
     with open(input_file) as istr:
