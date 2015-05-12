@@ -11,7 +11,7 @@ Actually, for now, it only provides the capability to keep your `/etc/hosts` upd
 # Installation
 
 ```
-pip install cloud-dns==0.1a1
+pip install cloud-dns==0.1a2
 ```
 
 # Getting started
