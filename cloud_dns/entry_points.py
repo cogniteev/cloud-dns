@@ -57,8 +57,8 @@ def update_etc_hosts_file(hostip_tuples, output_file=None):
             else:
                 if line == END_MARKUP:
                     previous_content_replaced = True
-                    for host, ip in hostip_tuples:
-                        etc_hosts.write("{} {}\n".format(ip.ljust(15, ' '), host))
+                    for hosts, ip in hostip_tuples:
+                        etc_hosts.write("{} {}\n".format(ip.ljust(15, ' '), ' '.join(hosts)))
                     between_markups = False
                     etc_hosts.write(line)
         if not previous_content_replaced:
@@ -75,7 +75,7 @@ def etc_hosts_update(output_file=None, **kwargs):
     update_etc_hosts_file(etc_hosts_generator(**kwargs), output_file)
 
 def etc_hosts_generator(**kwargs):
-    """Provides a generator of tuple (host, ip) for all nodes registered
+    """Provides a generator of tuple (hosts, ip) for all nodes registered
     in the configured projects
     """
     generators = []
@@ -87,8 +87,8 @@ def etc_hosts_generator(**kwargs):
 def etc_hosts_list(**kwargs):
     """Print to standard output nodes available in all configured projects
     """
-    for host, ip in etc_hosts_generator(**kwargs):
-        print "{} {}".format(ip.ljust(15, ' '), host)
+    for hosts, ip in etc_hosts_generator(**kwargs):
+        print "{} {}".format(ip.ljust(15, ' '), ' '.join(hosts))
 
 
 def cloud_dns(args=None):
