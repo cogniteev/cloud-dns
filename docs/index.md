@@ -11,7 +11,7 @@ Actually, for now, it only provides the capability to keep your `/etc/hosts` upd
 # Installation
 
 ```
-pip install cloud-dns==0.1b
+pip install cloud-dns==0.1
 ```
 
 As Cloud DNS has many dependencies, it is recommended to install it in a virtualenv.
