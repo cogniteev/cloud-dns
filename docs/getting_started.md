@@ -84,14 +84,17 @@ To allow another user to *pull* a profile, add its keybase identity to the `~/.c
 
 ## DNS Server
 
-Now that you properly fetched your profile, it is time to start a DNS server on top on that. You may install Docker version 1.5 or higher and then run the following command:
+Now that you properly fetched your profile, it is time to start a DNS server on top on that.
+
+You may install Docker version 1.5 or higher and then run the following command:
 
 ```shell
 docker run -ti -d -p 53:53/udp \
     -v /Users/$HOME/.config/cloud-dns:/root/.config/cloud-dns:ro \
-    cloud-dns cloud-dns server start
+    cloud-dns:0.2
 ```
 
-Your *cloud-dns* profiles are mounted in the Docker container, which provides a DNS server serving IPs addresses of your cloud instances.
+* Your *cloud-dns* profiles are mounted in the Docker container, which provides a DNS server serving IPs addresses of your cloud instances.
+* By default, DNS entries are updated every hour. Use option **--ttl** to customize this.
 
-At last, you have to add the Docker registry as first DNS server.
+You then have to add the Docker registry as first DNS server.

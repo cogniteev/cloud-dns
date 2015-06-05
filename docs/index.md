@@ -14,7 +14,7 @@ For now, it only provides:
 # Installation
 
 ```
-pip install cloud-dns==0.1
+pip install cloud-dns==0.2
 ```
 
 As Cloud DNS has many dependencies, it is recommended to install it in a virtualenv.

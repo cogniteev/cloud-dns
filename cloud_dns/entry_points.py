@@ -284,7 +284,7 @@ def cloud_dns(args=None):
         '--ttl',
         default=3600,
         type=int,
-        help='Profile reload interval'
+        help='Profile reload interval (in seconds) [default: %(default)s]'
     )
     dns_server_start_parser.set_defaults(func=server_start)
 
