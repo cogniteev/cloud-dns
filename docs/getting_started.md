@@ -91,7 +91,7 @@ You may install Docker version 1.5 or higher and then run the following command:
 ```shell
 docker run -ti -d -p 53:53/udp \
     -v /Users/$HOME/.config/cloud-dns:/root/.config/cloud-dns:ro \
-    cloud-dns:0.2
+    cogniteev/cloud-dns:0.2
 ```
 
 * Your *cloud-dns* profiles are mounted in the Docker container, which provides a DNS server serving IPs addresses of your cloud instances.
