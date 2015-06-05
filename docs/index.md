@@ -2,7 +2,10 @@
 
 Provides Cloud DNS utilities on top of Apache LibCloud. 
 
-Actually, for now, it only provides the capability to keep your `/etc/hosts` updated according to the various nodes your deal with on the cloud.
+For now, it only provides:
+
+* the capability to keep your `/etc/hosts` updated according to the various nodes your deal with on the cloud
+* a DNS server shipped in a Docker container
 
 ## Requirements
 

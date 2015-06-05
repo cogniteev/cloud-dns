@@ -4,7 +4,14 @@ import itertools
 import logging
 import os
 import os.path as osp
+import StringIO
+import signal
 import sys
+import threading
+import time
+
+from dnslib import RR,QTYPE,RCODE
+from dnslib.server import DNSServer,DNSHandler,BaseResolver,DNSLogger
 
 from .config import (
     DEFAULT_CONFIG_PATH,
@@ -29,6 +36,99 @@ def config_push(profile, bucket, **kwargs):
     """
     profile = GStorageKeybaseProfile(profile, GSDriver, bucket, **kwargs)
     profile.push()
+
+
+class ZoneResolver(BaseResolver):
+    """
+        Simple fixed zone file resolver.
+    """
+
+    def __init__(self, zone_file_generator, glob=False, ttl=3600):
+        """
+            Initialise resolver from zone file.
+            Stores RRs as a list of (label,type,rr) tuples
+            If 'glob' is True use glob match against zone file
+        """
+        self.glob = glob
+        self.eq = 'matchGlob' if glob else '__eq__'
+        self.zone_file_generator = zone_file_generator
+        self.load()
+        if ttl > 0:
+            thread = threading.Thread(target=self.reload, args=(ttl,))
+            thread.daemon = True
+            thread.start()
+
+    def load(self):
+        logging.info("Loading DNS information from cloud providers")
+        self.zone = [(rr.rname,QTYPE[rr.rtype],rr) for rr in RR.fromZone(self.zone_file_generator())]
+
+    def reload(self, ttl):
+        while True:
+            time.sleep(ttl)
+            logging.info("Updating DNS information from cloud providers")
+            self.load()
+
+    def resolve(self,request,handler):
+        """
+            Respond to DNS request - parameters are request packet & handler.
+            Method is expected to return DNS response
+        """
+        reply = request.reply()
+        qname = request.q.qname
+        qtype = QTYPE[request.q.qtype]
+        local_zone = self.zone
+        for name, rtype, rr in local_zone:
+            # Check if label & type match
+            if getattr(qname,self.eq)(name) and (qtype == rtype or
+                                                 qtype == 'ANY' or
+                                                 rtype == 'CNAME'):
+                # If we have a glob match fix reply label
+                if self.glob:
+                    a = copy.copy(rr)
+                    a.rname = qname
+                    reply.add_answer(a)
+                else:
+                    reply.add_answer(rr)
+                # Check for A/AAAA records associated with reply and
+                # add in additional section
+                if rtype in ['CNAME','NS','MX','PTR']:
+                    for a_name,a_rtype,a_rr in local_zone:
+                        if a_name == rr.rdata.label and a_rtype in ['A','AAAA']:
+                            reply.add_ar(a_rr)
+        if not reply.rr:
+            reply.header.rcode = RCODE.SERVFAIL
+        return reply
+
+
+def server_start(zone=None, ttl=3600, **kwargs):
+    if zone == None:
+        def zone_builder():
+            zone = StringIO.StringIO()
+            server_zone_list(zone=zone)
+            zone.seek(0)
+            return zone
+    elif zone == '-':
+        def zone_builder():
+            return sys.stdin
+    else:
+        def zone_builder():
+            return open(zone)
+    resolver = ZoneResolver(zone_builder, False, ttl)
+    logger = DNSLogger("request,reply,truncated,error", False)
+    def reload_dns_config(signum, frame):
+        if signum == signal.SIGUSR1:
+            resolver.load()
+    signal.signal(signal.SIGUSR1, reload_dns_config)
+    udp_server = DNSServer(resolver,
+                           port=53,
+                           address="",
+                           logger=logger)
+    udp_server.start()
+
+def server_zone_list(zone=None, **kwargs):
+    zone = zone or sys.stdout
+    for profile in Profiles(**kwargs).list():
+        profile.write_dns_file(zone)
 
 def update_etc_hosts_file(hostip_tuples, output_file=None):
     """Update specified nodes in /etc/hosts
@@ -160,6 +260,33 @@ def cloud_dns(args=None):
         help="List nodes in /etc/hosts format"
     )
     etc_hosts_list_parser.set_defaults(func=etc_hosts_list)
+
+    dns_server_parser = subparsers.add_parser(
+        'server',
+        help='Start DNS server'
+    )
+    dns_server_subparsers = dns_server_parser.add_subparsers(help='server commands')
+    dns_server_zone_parser = dns_server_subparsers.add_parser(
+        "zone",
+        help='Show DNS zone file'
+    )
+    dns_server_zone_parser.set_defaults(func=server_zone_list)
+    dns_server_start_parser = dns_server_subparsers.add_parser(
+        "start",
+        help='Start DNS server'
+    )
+    dns_server_start_parser.add_argument(
+        '--zone',
+        default=None,
+        help='Optional DNS zone file ("-" for stdin)'
+    )
+    dns_server_start_parser.add_argument(
+        '--ttl',
+        default=3600,
+        type=int,
+        help='Profile reload interval'
+    )
+    dns_server_start_parser.set_defaults(func=server_start)
 
     config_pull_parser.set_defaults(func=config_pull)
     args = parser.parse_args(args)

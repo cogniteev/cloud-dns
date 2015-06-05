@@ -29,6 +29,25 @@ class Project(object):
         self.provider = provider
         self.aliases = aliases or DEFAULT_HOST_ALIASES
 
+    def write_dns_file(self, ostr):
+        nodes = self.driver.list_nodes()
+        if not any(nodes):
+            return
+        for alias in self.aliases:
+            domain = self.format_node(nodes[0], alias).split('.', 1)[-1]
+            ostr.write('$ORIGIN ')
+            ostr.write(domain)
+            ostr.write(".\n$TTL 1h\n")
+            for node in nodes:
+                name = self.format_node(node, alias).split('.', 1)[0]
+                ostr.write('{} IN A {}\n'.format(name, node.public_ips[0]))
+
+    def format_node(self, node, fmt):
+        return fmt.format(**{
+            'node_name': node.name,
+            'project_name': self.driver.project
+        })
+
     def get_hostip_tuples(self):
         logging.info("Retrieving {} {} nodes".format(self.provider, self.driver.project))
         for node in self.driver.list_nodes():

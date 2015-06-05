@@ -81,3 +81,17 @@ Note: this does not support concurrent modifications for now: the last one pushi
 ### Share a profile with a co-worker
 
 To allow another user to *pull* a profile, add its keybase identity to the `~/.config/cloud-dns/<PROFILE>/users.yml` and *push* the profile. This will push to Google Storage an encrypted version of the profile for this user.
+
+## DNS Server
+
+Now that you properly fetched your profile, it is time to start a DNS server on top on that. You may install Docker version 1.5 or higher and then run the following command:
+
+```shell
+docker run -ti -d -p 53:53/udp \
+    -v /Users/$HOME/.config/cloud-dns:/root/.config/cloud-dns:ro \
+    cloud-dns cloud-dns server start
+```
+
+Your *cloud-dns* profiles are mounted in the Docker container, which provides a DNS server serving IPs addresses of your cloud instances.
+
+At last, you have to add the Docker registry as first DNS server.

@@ -105,6 +105,11 @@ class Profile(object):
                 self.__projects[project] = Project(project, **settings)
         return self.__projects
 
+    def write_dns_file(self, ostr):
+        for project in self.projects.values():
+            project.write_dns_file(ostr)
+
+
     def load_profile(self):
         if osp.isdir(self.path):
             with open(osp.join(self.path, 'projects.yml')) as istr:
