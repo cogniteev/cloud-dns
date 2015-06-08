@@ -90,7 +90,7 @@ You may install Docker version 1.5 or higher and then run the following command:
 
 ```shell
 docker run -ti -d -p 53:53/udp \
-    -v /Users/$HOME/.config/cloud-dns:/root/.config/cloud-dns:ro \
+    -v $HOME/.config/cloud-dns:/root/.config/cloud-dns:ro \
     cogniteev/cloud-dns:0.2
 ```
 
