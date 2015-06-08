@@ -86,6 +86,8 @@ To allow another user to *pull* a profile, add its keybase identity to the `~/.c
 
 Now that you properly fetched your profile, it is time to start a DNS server on top on that.
 
+### As a Docker container
+
 You may install Docker version 1.5 or higher and then run the following command:
 
 ```shell
@@ -95,7 +97,24 @@ docker run -ti -d -p 53:53/udp \
     cogniteev/cloud-dns:0.2
 ```
 
-* Your *cloud-dns* profiles are mounted in the Docker container, which provides a DNS server serving IPs addresses of your cloud instances.
-* By default, DNS entries are updated every hour. Use option **--ttl** to customize this.
+* Your *cloud-dns* profiles are mounted in the Docker container, which provides a DNS server serving IPs addresses of your cloud instances on port 53 UDP.
+* By default, DNS entries are updated every hour. Use option **--ttl** to override this value.
 
-You then have to add the Docker registry as first DNS server.
+Then you have to add the Docker registry as first DNS server:
+* `127.0.0.1` on Linux
+* Virtualbox Docker registry IP address on Mac OS.
+ 
+### Directly on your workstation
+
+If you enjoy more killing whales than riding them you can also run the DNS server on your server:
+
+```shell
+sudo cloud-dns server start
+```
+
+Super-privileged user is (still) required to open a socket on port < 1024 ...
+
+Please use following commands to get additional informations:
+
+* `cloud-dns server --help `
+* `cloud-dns server start --help`
