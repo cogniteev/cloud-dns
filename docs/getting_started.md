@@ -97,16 +97,17 @@ docker run -ti -d -p 53:53/udp \
     cogniteev/cloud-dns:0.2
 ```
 
-* Your *cloud-dns* profiles are mounted in the Docker container, which provides a DNS server serving IPs addresses of your cloud instances on port 53 UDP.
-* By default, DNS entries are updated every hour. Use option **--ttl** to override this value.
+* Your *cloud-dns* profiles are mounted in the Docker container, providing a DNS server for your cloud instances on port 53 with UDP.
+* By default, DNS entries are synced against your clouds every hour. Use option **--ttl** to override this value.
 
-Then you have to add the Docker registry as first DNS server:
+To take benefit of this, add the Docker registry as first DNS server:
+
 * `127.0.0.1` on Linux
 * Virtualbox Docker registry IP address on Mac OS.
  
 ### Directly on your workstation
 
-If you enjoy more killing whales than riding them you can also run the DNS server on your server:
+If you prefer killing whales than riding them, you can also run the DNS server directly on your workstation:
 
 ```shell
 sudo cloud-dns server start
