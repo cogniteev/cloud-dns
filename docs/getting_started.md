@@ -33,16 +33,17 @@ In this situation, a profile has already been pushed to a Google Storage bucket 
 
 1. Provide your co-worker with your keybase identity so that he can push an encrypted version of the profile on Google Storage. say `github://john.doe`
 1. In return, ask your co-worker to provide you:
-    * The Google Storage **bucket name**, say *acme-cloud-dns*
     * The **profile name** to pull, say *acme*
+    * The Google Storage **bucket name**, say *acme-cloud-dns*
+    
 1. Run the following command:
 
     ```
-    cloud-dns config -v pull my-company my-company-cloud-dns github://john.doe
+    cloud-dns config -v pull acme acme-cloud-dns github://john.doe
     ```
 
 That's it!
-The profile should be available in `~/.config/cloud-dns/my-company`
+The profile should be available in `~/.config/cloud-dns/acme`
 
 ### I have to create a new profile
 
