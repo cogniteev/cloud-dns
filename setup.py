@@ -29,6 +29,7 @@ setup(
     install_requires=[
         'apache-libcloud>=0.17',
         'boto>=2.38.0',
+        'dnslib>=0.9.6',
         'gcs-oauth2-boto-plugin==1.9',
         'keybase-api>=0.1.3',
         'pycrypto>=2.6.1',
