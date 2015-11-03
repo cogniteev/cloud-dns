@@ -163,8 +163,8 @@ def update_etc_hosts_file(hostip_tuples, output_file=None):
                     etc_hosts.write(line)
         if not previous_content_replaced:
             etc_hosts.write(BEGIN_MARKUP)
-            for host, ip in hostip_tuples:
-                etc_hosts.write("{} {}\n".format(ip.ljust(15, ' '), host))
+            for hosts, ip in hostip_tuples:
+                etc_hosts.write("{} {}\n".format(ip.ljust(15, ' '), ' '.join(hosts)))
             etc_hosts.write(END_MARKUP)
 
 def etc_hosts_update(output_file=None, **kwargs):
