@@ -1,6 +1,6 @@
 # Cloud DNS
 
-Provides Cloud DNS utilities on top of Apache LibCloud. 
+Provides Cloud DNS utilities on top of Apache LibCloud.
 
 For now, it only provides:
 
@@ -14,7 +14,7 @@ For now, it only provides:
 # Installation
 
 ```
-pip install cloud-dns==0.2
+pip install cloud-dns==0.3
 ```
 
 As Cloud DNS has many dependencies, it is recommended to install it in a virtualenv.

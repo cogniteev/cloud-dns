@@ -35,7 +35,7 @@ In this situation, a profile has already been pushed to a Google Storage bucket 
 1. In return, ask your co-worker to provide you:
     * The **profile name** to pull, say *acme*
     * The Google Storage **bucket name**, say *acme-cloud-dns*
-    
+
 1. Run the following command:
 
     ```
@@ -95,7 +95,7 @@ You may install Docker version 1.5 or higher and then run the following command:
 docker run -ti -d -p 53:53/udp \
     -v $HOME/.config/cloud-dns:/root/.config/cloud-dns:ro \
     --name cloud-dns \
-    cogniteev/cloud-dns:0.2
+    cogniteev/cloud-dns:0.3
 ```
 
 * Your *cloud-dns* profiles are mounted in the Docker container, providing a DNS server for your cloud instances on port 53 with UDP.
@@ -105,7 +105,7 @@ To take benefit of this, add the Docker registry as first DNS server:
 
 * `127.0.0.1` on Linux
 * Virtualbox Docker registry IP address on Mac OS.
- 
+
 ### Directly on your workstation
 
 If you prefer killing whales than riding them, you can also run the DNS server directly on your workstation:
