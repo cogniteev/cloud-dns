@@ -20,7 +20,7 @@ You may have:
 Install Cloud DNS Python module:
 
 ```shell
-pip install cloud-dns==0.1
+pip install cloud-dns==0.3.2
 ```
 
 As Cloud DNS has many dependencies, it is recommended to install it in a virtualenv.
@@ -95,7 +95,7 @@ You may install Docker version 1.5 or higher and then run the following command:
 docker run -ti -d -p 53:53/udp \
     -v $HOME/.config/cloud-dns:/root/.config/cloud-dns:ro \
     --name cloud-dns \
-    cogniteev/cloud-dns:0.3
+    cogniteev/cloud-dns:0.3.2
 ```
 
 * Your *cloud-dns* profiles are mounted in the Docker container, providing a DNS server for your cloud instances on port 53 with UDP.
