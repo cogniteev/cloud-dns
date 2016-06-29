@@ -1,7 +1,9 @@
-apache-libcloud>=0.17
-boto>=2.38.0
-dnslib>=0.9.6
+apache-libcloud==0.17
+boto==2.38.0
+dnslib>==0.9.6
 gcs-oauth2-boto-plugin==1.10
-keybase-api>=0.1.3
-pycrypto>=2.6.1
+google-api-python-client==1.4.1
+oauth2client==1.5.2
+keybase-api==1.0.2
+pycrypto==2.6.1
 PyYAML>=3.11
